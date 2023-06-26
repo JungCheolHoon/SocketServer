@@ -1,6 +1,5 @@
 package kr.co.mz.socketserver;
 
-import java.io.IOException;
 import kr.co.mz.socketserver.server.Server;
 
 public class ServerMain {
