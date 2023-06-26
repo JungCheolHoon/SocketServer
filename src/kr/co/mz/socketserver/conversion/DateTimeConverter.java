@@ -9,7 +9,6 @@ public class DateTimeConverter {
     public Calendar convertStringToDate(String dateString) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
-        // Date 객체를 Calendar 객체로 변환
         Calendar calendar = Calendar.getInstance();
         try {
             calendar.setTime(dateFormat.parse(dateString));
@@ -17,5 +16,5 @@ public class DateTimeConverter {
             throw new RuntimeException(e);
         }
         return calendar;
-    }// convertStringToDate
-}// class
+    }
+}
