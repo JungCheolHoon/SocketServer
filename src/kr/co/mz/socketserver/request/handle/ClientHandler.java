@@ -41,6 +41,7 @@ public class ClientHandler {
             System.err.print("An error occurred while parsing : " + e.getMessage());
         }
     }
+
     public void close(){
         try {
             clientSocket.close();
