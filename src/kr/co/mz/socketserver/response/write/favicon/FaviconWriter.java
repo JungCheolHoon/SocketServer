@@ -9,18 +9,22 @@ import kr.co.mz.socketserver.cache.Cache;
 import kr.co.mz.socketserver.request.handle.ClientHandler;
 public class FaviconWriter {
     private final StringBuilder faviconResponseHeader;
-    public FaviconWriter(StringBuilder faviconResponseHeader) {
+    private final OutputStream socketOutputStream;
+    private final String uri;
+    public FaviconWriter(StringBuilder faviconResponseHeader, OutputStream outputStream, String uri) {
         this.faviconResponseHeader = faviconResponseHeader;
+        this.socketOutputStream = outputStream;
+        this.uri = uri;
     }
-    public void writeFavicon(OutputStream outputStream, String fileName, Cache cache) throws IOException {
-        var file = new File(ClientHandler.PROJECT_DIRECTORY +"/resources" + fileName);
-        outputStream.write(faviconResponseHeader.toString().getBytes());
-        if(cache.containsFaviconKey(fileName)) {
+    public void writeFavicon(Cache cache) throws IOException {
+        var file = new File(ClientHandler.PROJECT_DIRECTORY +"/resources" + uri);
+        socketOutputStream.write(faviconResponseHeader.toString().getBytes());
+        if(cache.containsFaviconKey(uri)) {
             int offset = 0;
-            byte [] faviconCachedData = cache.getFaviconCache(fileName);
+            byte [] faviconCachedData = cache.getFaviconCache(uri);
             while(offset < faviconCachedData.length){
                 int length = Math.min(4096, faviconCachedData.length-offset);
-                outputStream.write(faviconCachedData,offset,length);
+                socketOutputStream.write(faviconCachedData,offset,length);
                 offset += length;
             }
         }
@@ -29,10 +33,10 @@ public class FaviconWriter {
                 int bytesRead;
                 byte[] buffer = new byte[4096];
                 while ((bytesRead = fileInputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
+                    socketOutputStream.write(buffer, 0, bytesRead);
                     arrayOutputStream.write(buffer, 0, bytesRead);
                 }
-                cache.putFaviconCache(fileName, arrayOutputStream.toByteArray());
+                cache.putFaviconCache(uri, arrayOutputStream.toByteArray());
             }
         }
     }

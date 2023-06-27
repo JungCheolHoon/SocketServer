@@ -9,21 +9,26 @@ import kr.co.mz.socketserver.cache.Cache;
 import kr.co.mz.socketserver.request.handle.ClientHandler;
 public class HtmlWriter {
     private final StringBuilder httpHeaderBuilder;
-    public HtmlWriter(StringBuilder httpResponseBuilder) {
+    private final OutputStream socketOutputStream;
+    private final String uri;
+    public HtmlWriter(StringBuilder httpResponseBuilder, OutputStream socketOutputStream,
+        String uri) {
         this.httpHeaderBuilder = httpResponseBuilder;
+        this.socketOutputStream = socketOutputStream;
+        this.uri = uri;
     }
-    public void writeHTML(OutputStream socketOutputStream,String fileName,Cache cache) throws IOException {
+    public void writeHTML(Cache cache) throws IOException {
         socketOutputStream.write(httpHeaderBuilder.toString().getBytes());
-        if(cache.containsHtmlKey(fileName)) {
+        if(cache.containsHtmlKey(uri)) {
             int offset = 0;
-            byte[] cacheData = cache.getHtmlCache(fileName);
+            byte[] cacheData = cache.getHtmlCache(uri);
             while (offset < cacheData.length) {
                 int length = Math.min(4096, cacheData.length - offset);
                 socketOutputStream.write(cacheData, offset, length);
                 offset += length;
             }
         }else{
-            var file = new File(ClientHandler.PROJECT_DIRECTORY +"/resources/templates" + fileName + ".html");
+            var file = new File(ClientHandler.PROJECT_DIRECTORY +"/resources/templates" + uri + ".html");
             var httpBodyBuilder = new StringBuilder();
             InputStream fileInputStream = new FileInputStream(ClientHandler.PROJECT_DIRECTORY + "/resources/templates/exception/404.html");
             if (file.exists() && !file.isDirectory()) {
@@ -36,7 +41,7 @@ public class HtmlWriter {
                 httpBodyBuilder.append(new String(buffer,0,bytesRead));
             }
             if(file.exists()){
-                cache.putHtmlCache(fileName, httpBodyBuilder.toString().getBytes());
+                cache.putHtmlCache(uri, httpBodyBuilder.toString().getBytes());
             }
             try {
                 fileInputStream.close();

@@ -5,7 +5,6 @@ import java.util.HashMap;
 public class Cache {
     private final HashMap<String,byte []> htmlCache;
     private final HashMap<String, byte []> faviconCache;
-
     public Cache() {
         htmlCache = new HashMap<>();
         faviconCache = new HashMap<>();

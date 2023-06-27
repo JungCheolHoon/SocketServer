@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 public class RequestReader {
-    public String readRequestLineWithCookie(InputStream inputStream){
+    private final InputStream inputStream;
+    public RequestReader(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
+    public String readRequestLineWithCookie(){
         var data = "";
         var resource = new StringBuilder();
         var reader = new BufferedReader( new InputStreamReader(inputStream));

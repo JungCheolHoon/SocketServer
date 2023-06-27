@@ -6,11 +6,11 @@ import kr.co.mz.socketserver.session.Session;
 import kr.co.mz.socketserver.request.handle.ClientHandler;
 public class HeaderGenerator {
     private final File file;
-    public HeaderGenerator(String fileName) {
-        this.file = new File(ClientHandler.PROJECT_DIRECTORY +"/resources/templates" + fileName + ".html");
+    public HeaderGenerator(String uri) {
+        this.file = new File(ClientHandler.PROJECT_DIRECTORY +"/resources/templates" + uri + ".html");
     }
     public StringBuilder generateResponseForFavicon(){
-        StringBuilder responseHeader = new StringBuilder();
+        var responseHeader = new StringBuilder();
         if(file.exists() && !file.isDirectory()){
             responseHeader.append("HTTP/1.1 200 OK\r\n");
         }else{
@@ -27,9 +27,9 @@ public class HeaderGenerator {
             httpResponseBuilder.append("HTTP/1.1 404 Not Found\r\n");
         }
         if(clientCookie.isEmpty()){ // 쿠키가 없다면
-            String expirationTime = session.createExpirationTime();
-            String cookieName = UUID.randomUUID().toString();
-            session.put(cookieName, expirationTime);
+            var expirationTime = session.createExpirationTime();
+            var cookieName = UUID.randomUUID().toString();
+            session.putCookie(cookieName, expirationTime);
             httpResponseBuilder.append("Set-Cookie: SESSIONID=").append(cookieName)
                 .append("\r\n");
         } else if(session.cookieHasExpired(clientCookie)) {

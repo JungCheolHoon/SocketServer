@@ -21,21 +21,21 @@ public class ClientHandler {
     }
     public void handle() throws IOException {
         try(var inputStream = clientSocket.getInputStream() ; var socketOutputStream = clientSocket.getOutputStream() ){
-            var requestLineWithCookie = new RequestReader().readRequestLineWithCookie(inputStream);
+            var requestLineWithCookie = new RequestReader(inputStream).readRequestLineWithCookie();
             if(requestLineWithCookie.isEmpty()){
                 return;
             }
             var requestParse = new RequestParser(requestLineWithCookie);
-            String Uri = requestParse.getURI();
-            String clientCookie = requestParse.getCookie();
-            if(Uri.equals("/favicon.ico")) {
-                var faviconResponseHeader = new HeaderGenerator(Uri).generateResponseForFavicon();
-                new FaviconWriter(faviconResponseHeader).writeFavicon(socketOutputStream,Uri,cache);
+            var uri = requestParse.getURI();
+            var clientCookie = requestParse.getCookie();
+            if(uri.equals("/favicon.ico")) {
+                var faviconResponseHeader = new HeaderGenerator(uri).generateResponseForFavicon();
+                new FaviconWriter(faviconResponseHeader, socketOutputStream, uri).writeFavicon(cache);
             }
             else{
-                Uri = Uri.equals("/") ? "/main" : Uri;
-                var httpResponseBuilder = new HeaderGenerator(Uri).generateResponseForHtml(session,clientCookie);
-                new HtmlWriter(httpResponseBuilder).writeHTML(socketOutputStream, Uri, cache);
+                uri = uri.equals("/") ? "/main" : uri;
+                var httpResponseBuilder = new HeaderGenerator(uri).generateResponseForHtml(session,clientCookie);
+                new HtmlWriter(httpResponseBuilder, socketOutputStream, uri).writeHTML(cache);
             }
         }catch (IOException e){
             System.err.print("An error occurred while parsing : " + e.getMessage());

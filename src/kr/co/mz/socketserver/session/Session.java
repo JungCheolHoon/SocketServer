@@ -12,20 +12,19 @@ public class Session {
     public Session() {
         clientCookie = new HashMap<>();
     }
-    public String get(String key){
+    public String getCookie(String key){
         return clientCookie.get(key);
     }
-    public Boolean contains(String key){
+    public Boolean containsCookie(String key){
         return clientCookie.containsKey(key);
     }
-    public void put(String key,String value){
+    public void putCookie(String key,String value){
         clientCookie.put(key,value);
     }
     public Boolean cookieHasExpired(String clientCookie){
-        var dateTimeConverter = new DateTimeConverter();
-        ZonedDateTime cookieExpireTime = dateTimeConverter.convertStringToDate(get(clientCookie));
-        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("GMT"));
-        if(contains(clientCookie) && cookieExpireTime.isBefore(now)) {
+        var cookieExpireTime = new DateTimeConverter(getCookie(clientCookie)).convertStringToDate();
+        var now = ZonedDateTime.now(ZoneId.of("GMT"));
+        if(containsCookie(clientCookie) && cookieExpireTime.isBefore(now)) {
             remove(clientCookie);
             return true;
         }
@@ -35,9 +34,9 @@ public class Session {
         clientCookie.remove(key);
     }
     public String createExpirationTime(){
-        ZoneId gmtZone = ZoneId.of("GMT");
-        ZonedDateTime expirationTime = ZonedDateTime.now(gmtZone).plusSeconds(20);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss z",
+        var gmtZone = ZoneId.of("GMT");
+        var expirationTime = ZonedDateTime.now(gmtZone).plusSeconds(20);
+        var formatter = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss z",
             Locale.ENGLISH);
         return expirationTime.format(formatter);
     }

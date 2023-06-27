@@ -6,9 +6,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class DateTimeConverter {
-    public ZonedDateTime convertStringToDate(String dateString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
-        ZonedDateTime dateTime = ZonedDateTime.parse(dateString, formatter);
+    private final String expirationTimeStr;
+    public DateTimeConverter(String expirationTimeStr) {
+        this.expirationTimeStr = expirationTimeStr;
+    }
+    public ZonedDateTime convertStringToDate() {
+        var formatter = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
+        var dateTime = ZonedDateTime.parse(expirationTimeStr, formatter);
         return dateTime.withZoneSameInstant(ZoneId.of("GMT"));
     }
 }
