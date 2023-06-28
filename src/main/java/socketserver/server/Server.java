@@ -2,23 +2,22 @@ package socketserver.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.sql.Connection;
 import socketserver.cache.Cache;
 import socketserver.handle.ClientHandler;
-import socketserver.jdbc.ConnectionPool;
+import socketserver.jdbc.JDBCConnection;
 import socketserver.session.Session;
 
 public class Server implements AutoCloseable{
     private final ServerSocket socketServer;
     private final Cache cache;
     private final Session session;
-    private final Connection connection;
+    private final java.sql.Connection connection;
     public Server(int port,Cache cache) {
         try {
             this.cache = cache;
             socketServer = new ServerSocket(port);
             session = new Session();
-            connection = new ConnectionPool().get();
+            connection = new JDBCConnection().get();
         } catch (IOException e) {
             System.err.println("An error occurred when creating the server socket: " + e.getMessage());
             throw new RuntimeException(e);
