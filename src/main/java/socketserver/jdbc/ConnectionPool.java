@@ -15,7 +15,7 @@ public class ConnectionPool {
         dataSource.setPassword(password);
     }
     public Connection get(){
-        Connection connection = null;
+        Connection connection;
         try {
             connection = dataSource.getConnection();
         } catch (SQLException e) {
