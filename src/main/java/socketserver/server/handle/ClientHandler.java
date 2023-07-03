@@ -1,11 +1,9 @@
 package socketserver.server.handle;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.sql.SQLException;
-import socketserver.server.jdbc.JDBCConnection;
+import socketserver.server.DBExecution;
 import socketserver.server.request.parse.RequestParser;
 import socketserver.server.response.generate.HeaderGenerator;
 import socketserver.server.response.write.ResponseWriter;
@@ -15,32 +13,27 @@ public class ClientHandler {
 
     public static final String PROJECT_DIRECTORY = System.getProperty("user.dir");
     private final Socket clientSocket;
-    private final InputStream inputStream;
-    private final OutputStream outputStream;
+    private final DBExecution dbExecution;
     private final Session session;
-    private final JDBCConnection jdbcConnection;
 
-    public ClientHandler(Socket clientSocket, Session session, JDBCConnection jdbcConnection)
-        throws IOException {
+    public ClientHandler(Socket clientSocket,
+        DBExecution dbExecution, Session session) throws IOException {
         this.clientSocket = clientSocket;
+        this.dbExecution = dbExecution;
         this.session = session;
-        this.jdbcConnection = jdbcConnection;
-        this.inputStream = clientSocket.getInputStream();
-        this.outputStream = clientSocket.getOutputStream();
     }
 
     public void handle() throws IOException, SQLException {
-        var requestParser = new RequestParser(inputStream);
-        var urn = requestParser.parseToURN();
-        if (urn.getPath() == null) {
+        var requestParser = new RequestParser(clientSocket.getInputStream());
+        var path = requestParser.getPath();
+        if (path.isEmpty()) {
             return;
         }
-        var path = urn.getPath().equals("/") ? "/main"
-            : urn.getPath();
+        path = path.equals("/") ? "/main" : path;
         var clientSessionId = requestParser.parseToSessionId();
         var responseHeader = new HeaderGenerator(path, session, clientSessionId).generate();
-        new ResponseWriter(responseHeader, outputStream, path).write(
-            jdbcConnection);
+        new ResponseWriter(responseHeader, clientSocket.getOutputStream(), path).write(
+            dbExecution);
     }
 
     public void close() throws IOException {

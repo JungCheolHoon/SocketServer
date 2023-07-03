@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.sql.SQLException;
 import socketserver.server.handle.ClientHandler;
-import socketserver.server.jdbc.JDBCConnection;
 import socketserver.server.session.Session;
 
 public class Server implements AutoCloseable {
 
     private final int port;
     private final Session session;
-    private final JDBCConnection jdbcConnection;
+    private final DBConnection dbConnection;
     private ServerSocket socketServer;
 
     private volatile boolean isServerRunning = true;
@@ -19,7 +18,7 @@ public class Server implements AutoCloseable {
     public Server(int port) throws SQLException {
         this.port = port;
         this.session = new Session();
-        this.jdbcConnection = new JDBCConnection();
+        this.dbConnection = new DBConnection();
         System.out.println("서버가 생성되었습니다.");
     }
 
@@ -33,7 +32,7 @@ public class Server implements AutoCloseable {
             System.out.println("서버가 시작되었습니다.");
             try {
                 var clientHandler = new ClientHandler(
-                    socketServer.accept(), session, jdbcConnection
+                    socketServer.accept(), new DBExecution(dbConnection.get()), session
                 );
                 clientHandler.handle();
                 clientHandler.close();
@@ -55,7 +54,7 @@ public class Server implements AutoCloseable {
         }
 
         try {
-            jdbcConnection.close();
+            dbConnection.close();
         } catch (SQLException sqle) {
             System.err.println("Failed to close Connection:" + sqle.getMessage());
         }

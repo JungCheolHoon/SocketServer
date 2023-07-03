@@ -1,15 +1,15 @@
-package socketserver.server.response.convert;
+package socketserver.server.session.convert;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class DateTimeConverter {
+public class SessionTimeConverter {
 
     private final String expirationTimeStr;
 
-    public DateTimeConverter(String expirationTimeStr) {
+    public SessionTimeConverter(String expirationTimeStr) {
         this.expirationTimeStr = expirationTimeStr;
     }
 
