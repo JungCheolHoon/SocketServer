@@ -1,4 +1,4 @@
-# ServerSokcet 을 활용한 Web Server 구현
+# ServerSokcet 을 활용한 Web Server Tutorial
 ## Process
 #### 1. Http Request URI Parsing
 #### 2. Local 에 위치한 html 파일 디렉토리와 URL 매칭
