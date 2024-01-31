@@ -24,7 +24,7 @@ public class DBExecution {
         connection.rollback();
     }
 
-    public void close(PreparedStatement preparedStatement) {
+    void close(PreparedStatement preparedStatement) {
         try {
             preparedStatement.close();
         } catch (SQLException e) {
