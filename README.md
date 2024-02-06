@@ -1,13 +1,14 @@
-# ServerSokcet 을 활용한 Web Server Tutorial<br/>
+# TCP Server - Web Server Tutorial<br/>
 
 
 ## Process
-#### 1. ClientHandler - ServiceController - HeaderGenerator - ResponeWriter 구조로써 Single Thread 기반
-#### 2. HTTP 통신 규격으로 온 요청의 StartLine 에서 URL 정보를 Parsing
-#### 3. Local 에 위치한 html 파일 디렉토리와 리소스 위치 정보를 매칭
-#### 4. Header (Status, Expriation Time) 생성
-#### 5. 해당 경로의 리소스(HTML) 파일을 HTTP Body (PayLoad) 에 Write
-#### 6. ServiceController 에서는 DB 접근하여 로그인 유무 확인시에만 사용하며, 항상 정적인 페이지를 반환<br/><br/><br/>
+#### 1. ServerSokcet 을 활용한 서버 구현
+#### 2. ClientHandler - ServiceController - HeaderGenerator - ResponeWriter 구조로써 Single Thread 기반
+#### 3. HTTP 통신 규격으로 온 요청의 StartLine 에서 URL 정보를 Parsing
+#### 4. Local 에 위치한 html 파일 디렉토리와 리소스 위치 정보를 매칭
+#### 5. Header (Status, Expriation Time) 생성
+#### 6. 해당 경로의 리소스(HTML) 파일을 HTTP Body (PayLoad) 에 Write
+#### 7. ServiceController 에서는 DB 접근하여 로그인 유무 확인시에만 사용하며, 항상 정적인 페이지를 반환<br/><br/><br/>
 
 
 ## Realization from Results
