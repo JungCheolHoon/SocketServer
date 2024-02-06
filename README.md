@@ -1,4 +1,4 @@
-# ServerSokcet 을 활용한 Web Server Tutorial
+# ServerSokcet 을 활용한 Web Server Tutorial<br/>
 
 
 ## Process
@@ -7,7 +7,7 @@
 #### 3. Local 에 위치한 html 파일 디렉토리와 리소스 위치 정보를 매칭
 #### 4. Header (Status, Expriation Time) 생성
 #### 5. 해당 경로의 리소스(HTML) 파일을 HTTP Body (PayLoad) 에 Write
-#### 6. ServiceController 에서는 DB 접근하여 로그인 유무 확인시에만 사용하며, 항상 정적인 페이지를 반환
+#### 6. ServiceController 에서는 DB 접근하여 로그인 유무 확인시에만 사용하며, 항상 정적인 페이지를 반환<br/>
 
 
 ## Realization from Results
