@@ -11,7 +11,7 @@
 #### 7. ServiceController 에서는 DB 접근하여 로그인 유무 확인시에만 사용하며, 항상 정적인 페이지를 반환<br/><br/><br/>
 
 
-## Realization from Results
+## Realization
 #### 1. Sring 프레임워크에서의 요청과 응답의 처리는 URL을 리소스 위치 정보로 파싱해서 처리
 #### 2. Server 는 While문과 같은 반복된 구조로써 동작
 #### 2. HTTP 는 3가지 영역으로 구분되며, Start Line , Header , Body 영역으로 구분
