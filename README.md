@@ -1,5 +1,4 @@
 # ServerSokcet 을 활용한 Web Server Tutorial
-<br/>
 ## Process
 #### 1. ClientHandler - ServiceController - HeaderGenerator - ResponeWriter 구조로써 Single Thread 기반
 #### 2. HTTP 통신 규격으로 온 요청의 StartLine 에서 URL 정보를 Parsing
@@ -7,7 +6,6 @@
 #### 4. Header (Status, Expriation Time) 생성
 #### 5. 해당 경로의 리소스(HTML) 파일을 HTTP Body (PayLoad) 에 Write
 #### 6. ServiceController 에서는 DB 접근하여 로그인 유무 확인시에만 사용하며, 항상 정적인 페이지를 반환
-<br/>
 ## Realization from Results
 #### 1. Sring 프레임워크에서의 요청과 응답의 처리는 URL을 리소스 위치 정보로 파싱해서 처리
 #### 2. Server 는 While문과 같은 반복된 구조로써 동작
