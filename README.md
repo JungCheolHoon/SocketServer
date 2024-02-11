@@ -3,7 +3,7 @@
 
 ## Process
 #### 1. ServerSokcet 을 활용한 서버 구현
-#### 2. ClientHandler - ServiceController - HeaderGenerator - ResponeWriter 구조로써 Single Thread 기반
+#### 2. ClientHandler - HeaderGenerator - ResponeWriter 구조로써 Single Thread 기반
 #### 3. HTTP 통신 규격으로 온 요청의 StartLine 에서 URL 정보를 Parsing
 #### 4. Local 에 위치한 html 파일 디렉토리와 리소스 위치 정보를 매칭
 #### 5. Header (Status, Expriation Time) 생성
