@@ -8,7 +8,6 @@ Java의 기본 네트워킹 기능을 사용하여 TCP 기반의 HTTP 웹 서버
 - [시스템 아키텍처](#시스템-아키텍처)
 - [기술 상세](#기술-상세)
 - [실행 방법](#실행-방법)
-- [프로젝트 구조](#프로젝트-구조)
 - [학습 내용](#학습-내용)
 
 ## 프로젝트 개요
@@ -86,23 +85,6 @@ $ java -jar webserver.jar
 
 # 기본 포트: 8080
 # 접속 방법: http://localhost:8080
-```
-
-## 프로젝트 구조
-```
-src/
-├── main/
-│   ├── java/
-│   │   ├── server/
-│   │   │   ├── TCPServer.java         # TCP 서버 소켓 관리
-│   │   │   ├── ClientHandler.java     # 클라이언트 연결 처리
-│   │   │   └── HeaderGenerator.java   # HTTP 헤더 생성
-│   │   ├── http/
-│   │   │   └── ResponseWriter.java    # HTTP 응답 생성
-│   │   └── service/
-│   │       └── ServiceController.java  # 비즈니스 로직
-│   └── resources/
-│       └── static/                     # 정적 리소스 디렉토리
 ```
 
 ## 학습 내용
